@@ -24,9 +24,9 @@ const BottomTabNavigation = () => {
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="JournalList" component={JournalListScreen} options={{ tabBarLabel: 'Journals' }} />
-      <Tab.Screen name="SearchFilter" component={SearchFilterScreen} options={{ tabBarLabel: 'Search' }} />
-      <Tab.Screen name="Settings" component={SettingsScreen} options={{ tabBarLabel: 'Settings' }} />
+      <Tab.Screen name="JournalList" component={JournalListScreen}  />
+      <Tab.Screen name="SearchFilter" component={SearchFilterScreen}  />
+      <Tab.Screen name="Settings" component={SettingsScreen}  />
     </Tab.Navigator>
   );
 };
