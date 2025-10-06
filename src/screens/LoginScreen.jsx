@@ -20,14 +20,14 @@ const { width, height } = Dimensions.get('window');
 export default function LoginScreen() {
   const navigation = useNavigation();
 
-  // Check for existing idToken on component mount
+  // Check for existing token on component mount
   useEffect(() => {
     const checkExistingToken = async () => {
       try {
-        const idToken = await AsyncStorage.getItem('idToken');
-        if (idToken) {
-          // Navigate to Home if idToken exists
-          navigation.replace('Home');
+        const token = await AsyncStorage.getItem('Token');
+        if (token) {
+          // Navigate to AppTabs if token exists
+          navigation.replace('AppTabs');
         }
       } catch (error) {
         console.log('Error checking existing token:', error);
@@ -40,13 +40,14 @@ export default function LoginScreen() {
   const onHandleGoogleSignIn = async () => {
     try {
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-      
       // Get the users ID token
       const signInResult = await GoogleSignin.signIn();
-      console.log('Google Sign-In Result:----->', signInResult);
+      console.log(signInResult,"signInResult------->");
+      await AsyncStorage.setItem("Token",signInResult.data.idToken);
       
+      let idToken;
       // Try the new style of google-sign in result, from v13+ of that module
-      let idToken = signInResult.data?.idToken;
+      idToken = signInResult.data?.idToken;
       if (!idToken) {
         // if you are using older versions of google-signin, try old style result
         idToken = signInResult.idToken;
@@ -55,21 +56,11 @@ export default function LoginScreen() {
         throw new Error('No ID token found');
       }
 
-      console.log('ID Token:', idToken);
-      
-      // Save idToken to AsyncStorage
-      await AsyncStorage.setItem('idToken', idToken);
-      
       // Create a Google credential with the token
-      const googleCredential = GoogleAuthProvider.credential(idToken);
-      
+      const googleCredential = GoogleAuthProvider.credential(signInResult.data.idToken);
+      navigation.replace("AppTabs");
       // Sign-in the user with the credential
-      const result = await signInWithCredential(getAuth(), googleCredential);
-      console.log('Firebase Auth Result:', result);
-      
-      // Navigate to Home after successful sign-in
-      navigation.replace('Home');
-      
+      return signInWithCredential(getAuth(), googleCredential);
     } catch (error) {
       console.log('Google Sign-In Error:', error);
     }

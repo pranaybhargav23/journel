@@ -7,29 +7,10 @@ const SplashScreen = (props) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const getUserData = async () => {
-      try {
-        setLoading(true);
-        const jsonValue = await AsyncStorage.getItem('user');
-        console.log('User data:', jsonValue);
-        if (jsonValue != null) {
-          const data = JSON.parse(jsonValue);
-          if (data) {
-            props.navigation.replace('Tabs');
-          }
-        } else {
-          setTimeout(() => {
-            props.navigation.replace('Login');
-          }, 3000);
-        }
-      } catch (e) {
-        console.error('Error reading user data:', e);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getUserData();
-  }, []);
+    setTimeout(()=>{
+      props.navigation.replace('Login');
+    }, 3000)
+  },[])
 
   return (
     <LinearGradient

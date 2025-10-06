@@ -3,8 +3,9 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/LoginScreen';
-import HomeScreen from '../screens/HomeScreen';
-
+import AddEditEntryScreen from '../screens/AddEditEntryScreen';
+import EntryDetailScreen from '../screens/EntryDetailScreen';
+import BottomTabNavigation from './BottomTabNavigation';
 
 const Stack = createStackNavigator();
 
@@ -13,8 +14,10 @@ const StackNavigation = () => {
     <Stack.Navigator screenOptions={{headerShown:false}}>
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Home" component={HomeScreen} />
-      
+      <Stack.Screen name="AppTabs" component={BottomTabNavigation} />
+      <Stack.Screen name="AddEditEntry" component={AddEditEntryScreen} />
+      <Stack.Screen name="EntryDetail" component={EntryDetailScreen} />
+    
     </Stack.Navigator>
   )
 }
